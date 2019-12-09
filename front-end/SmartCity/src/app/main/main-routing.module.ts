@@ -6,6 +6,11 @@ import { BaseMapComponent } from './base-map/base-map.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'map',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: MainComponent,
     children: [{ path: 'map', component: BaseMapComponent }]
   }
