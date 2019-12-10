@@ -14,7 +14,7 @@ export class BaseMapComponent implements OnInit {
       })
     ],
     zoom: 7,
-    center: latLng([ 46.879966, -121.726909 ])
+    center: latLng([ 45.66, 25.61 ])
   };
 
   constructor() { }
