@@ -7,8 +7,14 @@ html, body {
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-color: #ecf0f1;
 }
 
 .leaflet-control {
     display: none;
+}
+
+.map {
+    height: 100%;
+    padding: 0;
 }

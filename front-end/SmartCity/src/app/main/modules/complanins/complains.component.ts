@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { latLng, tileLayer } from 'leaflet';
 
 @Component({
-  selector: 'app-base-map',
-  templateUrl: './base-map.component.html',
-  styleUrls: ['./base-map.component.scss']
+  selector: 'app-complains',
+  templateUrl: './complains.component.html',
+  styleUrls: ['./complains.component.scss']
 })
-export class BaseMapComponent implements OnInit {
+export class ComplainsComponent implements OnInit {
+
   options = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -17,7 +18,8 @@ export class BaseMapComponent implements OnInit {
     center: latLng([ 45.66, 25.61 ])
   };
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
