@@ -1,0 +1,14 @@
+POST localhost:8080/request/add
+Content-Type: application/json
+Accept: application/json
+Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc2MzU2NjY3LCJleHAiOjE1NzcyMjA2Njd9.QW0D8n1__q_YCrekFaCA_EvUTgOYA5bY_z0pZUUilTeScWfKFXi8ZHf-13nHfBiUFLZm8mmJtNbgr4d5NZ-lJA
+
+{
+  "title" : "test4",
+  "description" : "test4",
+  "request_type" : "hazard",
+  "status" : "pending",
+  "latitude" : "100.000.000",
+  "longitude" : "233.225.642"
+}
+###
