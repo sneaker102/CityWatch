@@ -13,7 +13,7 @@ export class BaseMapComponent implements OnInit {
         attribution: '&copy; OpenStreetMap contributors'
       })
     ],
-    zoom: 7,
+    zoom: 13,
     center: latLng([ 45.66, 25.61 ])
   };
 
