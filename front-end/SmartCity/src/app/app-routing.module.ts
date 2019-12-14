@@ -13,18 +13,16 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-  {
-    path: 'maps',
+  { path: 'maps',
     canActivate: [AuthGuardService],
     loadChildren: () => import('./main/main.module').then(m => m.MainModule)
   },
   {
-    path: '**',
-    redirectTo: ''
-  }
+    path: '**', redirectTo: ''
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
