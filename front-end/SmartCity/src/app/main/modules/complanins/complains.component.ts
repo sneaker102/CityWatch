@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { latLng, tileLayer, circle, polygon, marker, icon } from 'leaflet';
 import { faMapMarkedAlt, faBars } from '@fortawesome/free-solid-svg-icons';
-
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { createCustomElement, NgElement, WithProperties } from '@angular/elements';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActionsMarkerComponent } from './actions-marker/actions-marker.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material';
+import { MarkerModalInfoComponent } from './marker-modal-info/marker-modal-info.component';
+import { MarkerPopupComponent } from './marker-popup/marker-popup.component';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { MenuComponent } from './menu/menu.component';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
   selector: 'app-complains',
   templateUrl: './complains.component.html',
   styleUrls: ['./complains.component.scss']
 })
-export class ComplainsComponent implements OnInit {
+export class ComplainsComponent implements OnInit, AfterViewInit {
   public faMapMarkedAlt = faMapMarkedAlt;
   public faBars = faBars;
 
   public canAttachMarker = false;
   public markerType;
+  public markerInfo;
 
   public options = {
     layers: [
@@ -29,48 +35,101 @@ export class ComplainsComponent implements OnInit {
     center: latLng([45.66, 25.61])
   };
 
-  private iconaa = icon({
-    iconUrl: '../../../../assets/markers/burning-house.png',
-    iconSize: [42, 42]
-  });
+  public layers;
 
-  public layers = [
-  ];
-
-  constructor(private _bottomSheet: MatBottomSheet, private _snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(
+    private _bottomSheet: MatBottomSheet,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
+    private http: ApiService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.layers.push(
-      circle([45.66, 25.61], { radius: 4000 })
-    );
   }
 
-  private addMarkerToMap(latlng, payload?): void {
-    this.layers.push(
-      marker(latlng, {
-        icon: icon({
-          iconUrl: `../../../../assets/markers/${ this.markerType }.png`,
-          iconSize: [42, 42]
-        })
+  ngAfterViewInit() {
+    this.getAllMarkers();
+  }
+
+  private addMarkerToMap(latlng): void {
+    const payload = {
+      title: this.markerInfo.title,
+      description: this.markerInfo.description,
+      request_type: this.markerType,
+      status: 'pending',
+      latitude: latlng.lat,
+      longitude: latlng.lng
+    };
+
+    this.http.setMarker(payload).subscribe(
+      () => { },
+      () => { },
+      () => this.getAllMarkers()
+    );
+    this.canAttachMarker = false;
+    this.markerType = '';
+  }
+
+  private getAllMarkers(): void {
+    this.layers = [circle([45.66, 25.61], { radius: 4000 })];
+    this.cd.detectChanges();
+
+    const currentLayers = [];
+
+    this.http.getAllMarkers().subscribe(
+      (markers => {
+        Array.from(markers).forEach((dbMarker: any) => {
+          console.log(dbMarker);
+          currentLayers.push(
+            marker([dbMarker.latitude, dbMarker.longitude], {
+              icon: icon({
+                iconUrl: `../../../../assets/markers/${dbMarker.request_type}.png`,
+                iconSize: [42, 42]
+              })
+            })
+              .bindPopup(`
+                <div style="display: flex; flex-direction: column; width: 250px">
+                  <div style="display:flex; justify-content: space-between">
+                    <mat-card-title style="font-weight: 600; margin-bottom: 10px"> ${ dbMarker.title} </mat-card-title>
+                    <span style="color: #d35400; font-weight: 600; margin-right: 8px"> ${ dbMarker.status === 'pending' ?  'In asteptare' : ''} </span>
+                  </div>
+                  <mat-card-subtitle style="margin-bottom: 6px"> ${ dbMarker.description} </mat-card-subtitle>
+                  <div style="display:flex; justify-content: space-between">
+                    <mat-card-subtitle style="color: gray"> ${ new Date(dbMarker.createdDate).toLocaleDateString('en-US')} </mat-card-subtitle>
+                    <mat-card-subtitle style="color: gray; margin-right: 8px"> ${ dbMarker.createdBy.name } </mat-card-subtitle>
+                  </div>
+                </div>
+              `)
+          );
+        });
+        this.layers.push(...currentLayers);
       })
-        .bindPopup(payload)
-    )
+    );
+
+  }
+
+  handleComplainForm(event) {
+    const dialogRef = this.dialog.open(MarkerModalInfoComponent);
+
+    dialogRef.afterClosed().subscribe(markerInfo => {
+      if (markerInfo) {
+        this.markerInfo = markerInfo;
+        this.addMarkerToMap(event.latlng);
+      }
+    });
+
   }
 
   public clickOnMap(event): void {
     if (this.canAttachMarker) {
-
-
-      this.addMarkerToMap(event.latlng);
-      this.canAttachMarker = false;
-      this.markerType = '';
+      this.handleComplainForm(event);
     } else {
       this._snackBar.open('Trebuie să selectați un marcator!', null, {
         duration: 2000
       });
     }
   }
-
 
 
   public openActions(): void {
@@ -89,6 +148,10 @@ export class ComplainsComponent implements OnInit {
         });
       }
     });
+  }
+
+  public openMenu(): void {
+    this._bottomSheet.open(MenuComponent);
   }
 
 }

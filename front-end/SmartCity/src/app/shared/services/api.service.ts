@@ -8,12 +8,13 @@ import { User } from '../models/user';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-ppnm';
+  randomString = '-6bnj';
   lastPathSeq = '.localhost.run';
   basePath = '';
   constructor(private htttp: HttpClient) {
     this.constructBasePath();
   }
+  
   constructBasePath(random?: string) {
     this.basePath = '';
     if (random) {
@@ -22,16 +23,27 @@ export class ApiService {
       this.basePath += this.firstPathSeq + this.randomString + this.lastPathSeq;
     }
   }
-  login(user: User): Observable<any> {
+
+  public login(user: User): Observable<any> {
     return this.htttp.post(this.basePath + '/auth/login', user);
   }
-  signUp(user: User): Observable<any> {
+
+  public signUp(user: User): Observable<any> {
     return this.htttp.post(this.basePath + '/auth/signup', user);
   }
-  loginGoogle(): Observable<any> {
+
+  public loginGoogle(): Observable<any> {
     return this.htttp.post(
       this.basePath + `/oauth2/authorize/google?redirect_uri=${'/complains'}`,
       {}
     );
+  }
+
+  public getAllMarkers(): Observable<any> {
+    return this.htttp.get(this.basePath + '/request/list');
+  }
+
+  public setMarker(payload): Observable<any> {
+    return this.htttp.post(this.basePath + '/request/add', payload);
   }
 }
