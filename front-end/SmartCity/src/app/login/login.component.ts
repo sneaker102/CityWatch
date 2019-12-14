@@ -93,4 +93,12 @@ export class LoginComponent implements OnInit {
     this.isLogin = false;
     this.title = 'Sign up';
   }
+  loginGoogle(e: any) {
+    e.stopPropagation();
+    this.api.loginGoogle().subscribe(resp => {
+      if (resp) {
+        console.log(resp);
+      }
+    });
+  }
 }

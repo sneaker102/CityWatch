@@ -34,6 +34,7 @@
     </mat-form-field>
   </form>
   <button mat-flat-button class="login-bttn" (click)="login()">Login</button>
+  <button mat-flat-button class="google-bttn" (click)="loginGoogle($event)"><img src="../../assets/Google_logo.svg" height="42" width="42"> Login</button>
   <button mat-flat-button class="register-bttn" (click)="register()">Register</button>
 </div>
 <div class="signup" *ngIf="!isLogin">
