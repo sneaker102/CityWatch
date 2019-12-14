@@ -1,16 +1,15 @@
-import { Component, OnInit, Injector, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { latLng, tileLayer, circle, polygon, marker, icon } from 'leaflet';
-import { faMapMarkedAlt, faBars } from '@fortawesome/free-solid-svg-icons';
-import { createCustomElement, NgElement, WithProperties } from '@angular/elements';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { latLng, tileLayer, marker, icon } from 'leaflet';
+import { faMapMarkedAlt, faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActionsMarkerComponent } from './actions-marker/actions-marker.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material';
 import { MarkerModalInfoComponent } from './marker-modal-info/marker-modal-info.component';
-import { MarkerPopupComponent } from './marker-popup/marker-popup.component';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { MenuComponent } from './menu/menu.component';
-import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_interface';
+import { StoreService } from 'src/app/shared/services/store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-complains',
@@ -20,21 +19,13 @@ import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_i
 export class ComplainsComponent implements OnInit, AfterViewInit {
   public faMapMarkedAlt = faMapMarkedAlt;
   public faBars = faBars;
+  public faSignOutAlt = faSignOutAlt;
 
   public canAttachMarker = false;
   public markerType;
   public markerInfo;
 
-  public options = {
-    layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      })
-    ],
-    zoom: 13,
-    center: latLng([45.66, 25.61])
-  };
-
+  public options;
   public layers;
 
   constructor(
@@ -42,10 +33,22 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private http: ApiService,
-    private cd: ChangeDetectorRef
+    private storeSerive: StoreService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    navigator.geolocation.getCurrentPosition(coords => {
+      this.options = {
+        layers: [
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+          })
+        ],
+        zoom: 14,
+        center: latLng([coords.coords.latitude, coords.coords.longitude])
+      };
+    })
   }
 
   ngAfterViewInit() {
@@ -72,9 +75,7 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
   }
 
   private getAllMarkers(): void {
-    this.layers = [circle([45.66, 25.61], { radius: 4000 })];
-    this.cd.detectChanges();
-
+    this.layers = [];
     const currentLayers = [];
 
     this.http.getAllMarkers().subscribe(
@@ -152,6 +153,11 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
 
   public openMenu(): void {
     this._bottomSheet.open(MenuComponent);
+  }
+
+  public handleSingOut() {
+    this.storeSerive.remove('token');
+    this.router.navigate(['login']);
   }
 
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-menu',
@@ -8,9 +10,16 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent {
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, public dialog: MatDialog) { }
 
-  public navigateTo(route) {
+  public navigateTo(route): void {
     this.route.navigate([route]);
+  }
+
+  public openModal(): void {
+    this.dialog.open(DashboardComponent, {
+      width: '80%',
+      height: '80%'
+    });
   }
 }
