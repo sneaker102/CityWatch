@@ -5,7 +5,9 @@
      [leafletLayers]="layers">
 </div>
 
-<div class="actions-button">
+<img *ngIf="markerType" class="logo-image-selected" src='../../../../../assets/markers/{{markerType}}.png'>
+
+<div (click)="openActions()" class="actions-button">
     <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
 </div>
 
