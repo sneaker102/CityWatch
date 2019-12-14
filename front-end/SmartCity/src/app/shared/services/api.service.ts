@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-vmm6';
+  randomString = '-x3g7';
   lastPathSeq = '.localhost.run';
   basePath = '';
   constructor(private htttp: HttpClient) {

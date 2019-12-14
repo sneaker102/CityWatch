@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'complains',
-    // canActivate: [AuthGuardService],
+   // canActivate: [AuthGuardService],
     loadChildren: () => import('./main/modules/complanins/complains.module').then(m => m.ComplainsModule)
   },
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./main/modules/ride-sharing/ride-sharing.module').then(m => m.RideSharingModule)
   },
   {
-    path: '**', redirectTo: ''
+    path: '**', canActivate: [AuthGuardService], redirectTo: ''
   },
 ];
 
