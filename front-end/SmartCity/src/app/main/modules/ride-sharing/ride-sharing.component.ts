@@ -1,4 +1,11 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy
+} from "@angular/core";
 const L = require("leaflet");
 require("leaflet-routing-machine");
 @Component({
@@ -6,7 +13,10 @@ require("leaflet-routing-machine");
   templateUrl: "./ride-sharing.component.html",
   styleUrls: ["./ride-sharing.component.scss"]
 })
-export class RideSharingComponent implements OnInit, AfterViewInit {
+export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild("mapRide", { static: false }) mapElement: ElementRef;
+
+  map: L.Map;
   options = {
     layers: [
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -16,13 +26,25 @@ export class RideSharingComponent implements OnInit, AfterViewInit {
     zoom: 13,
     center: L.latLng([45.66, 25.61])
   };
-  constructor() {}
 
-  ngOnInit() {}
+  constructor() {
+    console.log("constr", this.mapElement);
+  }
+
+  ngOnInit() {
+    console.log("nginit", this.mapElement);
+  }
+  ngOnDestroy(): void {
+    this.mapElement.nativeElement.outerHTML = "";
+  }
   ngAfterViewInit(): void {
+    console.log("after", this.mapElement);
+
+    this.map = new L.Map(this.mapElement.nativeElement, this.options);
+
     L.Routing.control({
-      waypoints: [L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)],
+      waypoints: [L.latLng(45.61753, 25.69367), L.latLng(45.64949, 25.60655)],
       routeWhileDragging: true
-    });
+    }).addTo(this.map);
   }
 }
