@@ -1,0 +1,15 @@
+<h3 mat-dialog-title>{{title}}</h3>
+<form [formGroup]="userFormGroup">
+  <mat-form-field>
+    <input matInput placeholder="Email" formControlName="email" required>
+    <mat-error *ngIf="userFormGroup.get('email').hasError('required')">
+      Mandatory field.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" formControlName="password" required>
+    <mat-error *ngIf="userFormGroup.get('password').hasError('required')">
+      Mandatory field.
+    </mat-error>
+  </mat-form-field>
+</form>
