@@ -1,0 +1,7 @@
+GET http://blendicavlad-vmm6.localhost.run/user/single&email=blendicavlad@yahoo.com
+Accept: application/json
+Content-Type: application/json
+Access-Control-Allow-Headers:
+
+###
+
