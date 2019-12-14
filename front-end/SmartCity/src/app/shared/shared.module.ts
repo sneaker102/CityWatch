@@ -56,7 +56,7 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   exports: [
     CommonModule,
