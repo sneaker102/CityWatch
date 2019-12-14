@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'complains',
     pathMatch: 'full'
   },
   {
@@ -24,13 +24,12 @@ const routes: Routes = [
     loadChildren: () => import('./main/modules/ride-sharing/ride-sharing.module').then(m => m.RideSharingModule)
   },
   {
-    path: '**',
-    redirectTo: ''
-  }
+    path: '**', redirectTo: ''
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,20 +1,25 @@
 <div class="login-wrapper">
   <div class="login">
-    <h3 mat-dialog-title>{{title}}</h3>
-    <form [formGroup]="userFormGroup">
+    <h3 class="login-title">{{title}}</h3>
+    <form [formGroup]="userFormGroup" class="login-form">
       <mat-form-field>
         <input matInput placeholder="Email" formControlName="email" required>
-        <mat-error *ngIf="userFormGroup.get('email').hasError('required')">
-          Mandatory field.
+        <mat-error
+          *ngIf="userFormGroup.get('email').hasError('pattern') && !userFormGroup.get('email').hasError('required')">
+          Pattern: xxxx@zzz.yyy
+        </mat-error>
+        <mat-error
+          *ngIf="!userFormGroup.get('email').hasError('pattern') && userFormGroup.get('email').hasError('required')">
+          Mandatory field
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Password" formControlName="password" required>
-        <mat-error *ngIf="userFormGroup.get('password').hasError('required')">
+        <input matInput type="password" placeholder="Password" formControlName="password" required>
+        <mat-error *ngIf="userFormGroup.get('password').hasError('required') ">
           Mandatory field.
         </mat-error>
       </mat-form-field>
-    </form> 
+    </form>
     <button mat-flat-button (click)="login()">Login</button>
   </div>
 </div>
