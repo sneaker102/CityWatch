@@ -1,0 +1,6 @@
+GET http://blendicavlad-ppnm.localhost.run/user/single?email=blendicavlad@yahoo.com
+Accept: application/json
+Content-Type: application/json
+Authorization:eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc2MzMwMTgwLCJleHAiOjE1NzcxOTQxODB9.azsWKSVKsS6PgsRXC_v7qbqRSIvdUhS1id91M7GiZxVTVaoAh2MP3DoiyoxrEYfSP3Y2yfVWJjUIpA9gAfPe4A
+###
+
