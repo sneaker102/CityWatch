@@ -33,7 +33,7 @@ public class User {
 	private String imageUrl;
 
 	@Column(nullable = false)
-	private Boolean emailVerified = false;
+	private Boolean email_verified = false;
 
 	@JsonIgnore
 	private String password;
@@ -76,12 +76,12 @@ public class User {
 		this.imageUrl = imageUrl;
 	}
 
-	public Boolean getEmailVerified() {
-		return emailVerified;
+	public Boolean getEmail_verified() {
+		return email_verified;
 	}
 
-	public void setEmailVerified(Boolean emailVerified) {
-		this.emailVerified = emailVerified;
+	public void setEmail_verified(Boolean emailVerified) {
+		this.email_verified = emailVerified;
 	}
 
 	public String getPassword() {
