@@ -1,4 +1,14 @@
 <div class="map"
      leaflet
-     [leafletOptions]="options">
+     [leafletOptions]="options"
+     (leafletClick)="clickOnMap($event)"
+     [leafletLayers]="layers">
+</div>
+
+<div class="actions-button">
+    <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
+</div>
+
+<div class="menu-button">
+    <fa-icon [icon]="faBars"></fa-icon>
 </div>

@@ -1,25 +1,120 @@
-<div class="login-wrapper">
-  <div class="login">
-    <h3 class="login-title">{{title}}</h3>
-    <form [formGroup]="userFormGroup" class="login-form">
-      <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email" required>
-        <mat-error
-          *ngIf="userFormGroup.get('email').hasError('pattern') && !userFormGroup.get('email').hasError('required')">
-          Pattern: xxxx@zzz.yyy
-        </mat-error>
-        <mat-error
-          *ngIf="!userFormGroup.get('email').hasError('pattern') && userFormGroup.get('email').hasError('required')">
-          Mandatory field
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="password" placeholder="Password" formControlName="password" required>
-        <mat-error *ngIf="userFormGroup.get('password').hasError('required') ">
-          Mandatory field.
-        </mat-error>
-      </mat-form-field>
-    </form>
-    <button mat-flat-button (click)="login()">Login</button>
-  </div>
+<div class="login" *ngIf="isLogin">
+  <h3 class="login-title">{{ title }}</h3>
+  <form [formGroup]="userFormGroup" class="login-form">
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" required />
+      <mat-error
+        *ngIf="
+          userFormGroup.get('email').hasError('pattern') &&
+          !userFormGroup.get('email').hasError('required')
+        "
+      >
+        Pattern: xxxx@zzz.yyy
+      </mat-error>
+      <mat-error
+        *ngIf="
+          !userFormGroup.get('email').hasError('pattern') &&
+          userFormGroup.get('email').hasError('required')
+        "
+      >
+        Mandatory field
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+        required
+      />
+      <mat-error *ngIf="userFormGroup.get('password').hasError('required')">
+        Mandatory field
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <button mat-flat-button class="login-bttn" (click)="login()">Login</button>
+  <button mat-flat-button class="google-bttn" (click)="loginGoogle($event)"><img src="../../assets/Google_logo.svg" height="42" width="42"> Login</button>
+  <button mat-flat-button class="register-bttn" (click)="register()">Register</button>
+</div>
+<div class="signup" *ngIf="!isLogin">
+  <h3 class="login-title">{{ title }}</h3>
+  <form [formGroup]="userFormGroup" class="login-form">
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name" required />
+      <mat-error
+        *ngIf="
+          userFormGroup.get('name').hasError('required') &&
+          !userFormGroup.get('name').hasError('pattern')
+        "
+      >
+        Mandatory field
+      </mat-error>
+      <mat-error
+        *ngIf="
+          !userFormGroup.get('name').hasError('required') &&
+          userFormGroup.get('name').hasError('pattern')
+        "
+      >
+        Name form: First-Second or First
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="userName" required />
+      <mat-error
+        *ngIf="
+          userFormGroup.get('userName').hasError('required') &&
+          !userFormGroup.get('userName').hasError('pattern')
+        "
+      >
+        Mandatory field
+      </mat-error>
+      <mat-error
+        *ngIf="
+          !userFormGroup.get('userName').hasError('required') &&
+          userFormGroup.get('userName').hasError('pattern')
+        "
+      >
+        Username must have at least 5 characters
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" required />
+      <mat-error
+        *ngIf="
+          userFormGroup.get('email').hasError('pattern') &&
+          !userFormGroup.get('email').hasError('required')
+        "
+      >
+        Pattern: xxxx@zzz.yyy
+      </mat-error>
+      <mat-error
+        *ngIf="
+          !userFormGroup.get('email').hasError('pattern') &&
+          userFormGroup.get('email').hasError('required')
+        "
+      >
+        Mandatory field
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        type="password"
+        placeholder="Password"
+        formControlName="registerPass"
+        required
+      />
+      <!-- <button mat-icon-button><mat-icon>visibility</mat-icon></button> -->
+      <mat-error *ngIf=" !userFormGroup.get('registerPass').hasError('pattern') &&
+      userFormGroup.get('registerPass').hasError('required')">
+        Mandatory field
+      </mat-error>
+       <mat-error *ngIf=" userFormGroup.get('registerPass').hasError('pattern') &&
+      !userFormGroup.get('registerPass').hasError('required')">
+      Password should contain a digit[0-9], a lowercase letter[a-z], an uppercase letter[A-Z], and one of the !@#$%&* characters.
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <button mat-flat-button class="login-bttn" (click)="signUp()">Sign up</button>
 </div>

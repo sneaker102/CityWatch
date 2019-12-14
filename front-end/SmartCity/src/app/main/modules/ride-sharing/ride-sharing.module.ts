@@ -5,15 +5,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { RideSharingRoutingModule } from './ride-sharing-routing.module';
 
-
-
 @NgModule({
   declarations: [RideSharingComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    LeafletModule,
-    RideSharingRoutingModule
-  ]
+  imports: [CommonModule, SharedModule, LeafletModule, RideSharingRoutingModule]
 })
-export class RideSharingModule { }
+export class RideSharingModule {}

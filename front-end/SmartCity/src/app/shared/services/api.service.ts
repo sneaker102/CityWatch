@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-vmm6';
+  randomString = '-ppnm';
   lastPathSeq = '.localhost.run';
   basePath = '';
   constructor(private htttp: HttpClient) {
@@ -27,5 +27,11 @@ export class ApiService {
   }
   signUp(user: User): Observable<any> {
     return this.htttp.post(this.basePath + '/auth/signup', user);
+  }
+  loginGoogle(): Observable<any> {
+    return this.htttp.post(
+      this.basePath + `/oauth2/authorize/google?redirect_uri=${'/complains'}`,
+      {}
+    );
   }
 }

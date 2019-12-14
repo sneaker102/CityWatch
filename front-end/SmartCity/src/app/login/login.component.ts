@@ -8,6 +8,8 @@ import {
   EmailValidation,
   PasswordValidation
 } from '../shared/validators';
+import { Router } from '@angular/router';
+import { StoreService } from '../shared/services/store.service';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +18,14 @@ import {
 })
 export class LoginComponent implements OnInit {
   title = 'Login';
+  isLogin = true;
   userFormGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder, private api: ApiService) {
+  constructor(
+    private localStorage: StoreService,
+    private formBuilder: FormBuilder,
+    private api: ApiService,
+    private router: Router
+  ) {
     this.userFormGroup = this.formBuilder.group({
       name: ['', NameValidation],
       userName: ['', UserNameValidation],
@@ -30,16 +38,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
   login() {
     if (!this.hasLoginErrors()) {
-    const user: User = {
-      email: this.userFormGroup.get('email').value,
-      password: this.userFormGroup.get('password').value
-    };
-    this.api.login(user).subscribe(resp => {
-      if (resp) {
-        console.log(resp);
-      }
-    });
-  }
+      const user: User = {
+        email: this.userFormGroup.get('email').value,
+        password: btoa(this.userFormGroup.get('password').value)
+      };
+      this.api.login(user).subscribe(resp => {
+        if (resp) {
+          localStorage.setItem('token', resp.accessToken);
+          console.log(resp);
+          this.router.navigate(['complains']);
+        }
+      });
+    }
   }
   signUp() {
     if (!this.hasRegisterErrors()) {
@@ -47,11 +57,12 @@ export class LoginComponent implements OnInit {
         name: this.userFormGroup.get('name').value,
         email: this.userFormGroup.get('email').value,
         userName: this.userFormGroup.get('userName').value,
-        password: this.userFormGroup.get('registerPass').value
+        password: btoa(this.userFormGroup.get('registerPass').value)
       };
       this.api.signUp(user).subscribe(resp => {
-        if (resp) {
-          console.log(resp);
+        if (resp.success) {
+          this.isLogin = true;
+          this.title = 'Login';
         }
       });
     }
@@ -77,5 +88,17 @@ export class LoginComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  register() {
+    this.isLogin = false;
+    this.title = 'Sign up';
+  }
+  loginGoogle(e: any) {
+    e.stopPropagation();
+    this.api.loginGoogle().subscribe(resp => {
+      if (resp) {
+        console.log(resp);
+      }
+    });
   }
 }
