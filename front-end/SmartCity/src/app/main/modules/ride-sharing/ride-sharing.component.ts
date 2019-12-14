@@ -1,26 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { tileLayer, latLng } from 'leaflet';
-
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+const L = require("leaflet");
+require("leaflet-routing-machine");
 @Component({
-  selector: 'app-ride-sharing',
-  templateUrl: './ride-sharing.component.html',
-  styleUrls: ['./ride-sharing.component.scss']
+  selector: "app-ride-sharing",
+  templateUrl: "./ride-sharing.component.html",
+  styleUrls: ["./ride-sharing.component.scss"]
 })
-export class RideSharingComponent implements OnInit {
-
+export class RideSharingComponent implements OnInit, AfterViewInit {
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors"
       })
     ],
     zoom: 13,
-    center: latLng([ 45.66, 25.61 ])
+    center: L.latLng([45.66, 25.61])
   };
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit() {}
+  ngAfterViewInit(): void {
+    L.Routing.control({
+      waypoints: [L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)],
+      routeWhileDragging: true
+    });
   }
-
 }
