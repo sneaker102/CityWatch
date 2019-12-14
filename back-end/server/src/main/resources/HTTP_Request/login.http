@@ -1,0 +1,10 @@
+POST http://blendicavlad-vmm6.localhost.run/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email" : "blendicavlad@yahoo.com",
+  "password": "parola"
+}
+
+###
