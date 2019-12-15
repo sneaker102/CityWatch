@@ -36,10 +36,10 @@
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css",
-              "./node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css",
+              "./node_modules/leaflet-routing-machine/dist/leaflet-routing-machine.css"
             ],
             "scripts": [
-
+              "./node_modules/vega/build/vega.min.js"
             ]
           },
           "configurations": {

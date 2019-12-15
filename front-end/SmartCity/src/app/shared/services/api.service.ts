@@ -50,7 +50,7 @@ export class ApiService {
   getRides(): Observable<any> {
     return this.htttp.get(this.basePath + '/ride_share/list');
   }
-  
+
   public getAllMarkers(): Observable<any> {
     return this.htttp.get(this.basePath + '/request/list');
   }
