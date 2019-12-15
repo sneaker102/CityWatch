@@ -14,7 +14,7 @@ import { Spec } from 'vega';
 })
 export class DashboardComponent implements OnInit {
   isLineChartLoaded = false;
-  currentAddress: string;
+  currentAddress;
   streets = [
     'Muresenilor',
     'Brediceanu Tiberiu',
@@ -35,11 +35,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.api.getAddress(this.data.lat, this.data.lng).subscribe(
-      address => this.currentAddress = new DOMParser()
-        .parseFromString(address, 'text/xml').getElementsByTagName('result')[0].childNodes[0].nodeValue,
+      (address: any) => this.currentAddress = JSON.parse(address),
       () => { },
       () => {
-        console.log(this.currentAddress);
+        console.log(this.currentAddress.address.road);
         this.buildChart();
       }
     );

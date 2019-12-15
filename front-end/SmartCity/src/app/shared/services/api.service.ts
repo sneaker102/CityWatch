@@ -74,7 +74,7 @@ export class ApiService {
 
   public getAddress(lat, lng): Observable<any> {
     return this.htttp.get(
-      `https://nominatim.openstreetmap.org/reverse?format=xml&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
       { responseType: 'text' }
     );
   }
