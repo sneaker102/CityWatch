@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit {
         },
         y: { field: 'cars', type: 'quantitative', axis: { title: null } }
       },
-      width: 800,
+      width: 1000,
       height: 185
     };
 
