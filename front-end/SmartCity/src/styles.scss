@@ -65,6 +65,29 @@ body {
   }
 }
 
+.singout-button {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  margin: 19px;
+  box-shadow: 0 0 5px #95a5a6;
+  cursor: pointer;
+
+
+  & fa-icon {
+      font-size: 24px;
+      position: absolute;
+      top: 6px;
+      right: 7px;
+  }
+}
+
 .validation-class mat-dialog-container{
     background-color: #eee;
 }
