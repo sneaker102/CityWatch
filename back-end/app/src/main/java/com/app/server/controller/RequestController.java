@@ -51,6 +51,25 @@ public class RequestController {
 		return ResponseEntity.created(location).body(new ApiResponse(true,"Request created successfully"));
 	}
 
+	@PostMapping("/update")
+	public ApiResponse updateRequest(@Valid @RequestBody Request requestData, @RequestParam Long request_id)
+			throws Exception {
+
+		Request request;
+		if(requestData == null) {
+			throw new BadRequestException("Response body is empty");
+		}
+		if(request_id == null) {
+			throw new BadRequestException("No Request ID Parameter found");
+		}
+		request = requestRepository.findById(request_id).orElseThrow(
+				() -> new Exception("No request found"));
+
+		updateFromData(request,requestData);
+
+		return new ApiResponse(true,"Updated");
+	}
+
 	public Request updateFromData(Request request, Request requestData) throws BadRequestException {
 
 		request.setTitle(requestData.getTitle());

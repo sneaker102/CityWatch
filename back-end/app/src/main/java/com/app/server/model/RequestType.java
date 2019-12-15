@@ -6,11 +6,15 @@ import java.util.Arrays;
 
 public enum RequestType {
 
-	complaint("Complaint"),
-	suggestion("Suggestion"),
+	complaint("complaint"),
+	suggestion("suggestion"),
 	hazard("Hazard"),
-	rideshare("Ride Sharing"),
-	garbage("Garbage");
+	burning ("burning"),
+	site("site"),
+	traffic("traffic"),
+	question("question"),
+	rideshare("ride sharing"),
+	trash("trash");
 
 	RequestType(String s) {
 	}

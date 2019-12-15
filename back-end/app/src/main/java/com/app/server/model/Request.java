@@ -1,7 +1,4 @@
 package com.app.server.model;
-
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -50,17 +47,6 @@ public class Request extends Auditable<User> {
 	private String created_by = Optional.ofNullable(super.getCreatedBy()).map(User::getName).orElse(null);
 	@Column(insertable = false,updatable = false)
 	private String last_updated_by = Optional.ofNullable(super.getLastModifiedBy()).map(User::getName).orElse(null);
-
-//	public Request() {
-//		if(super.getCreatedDate() != null)
-//			this.created_date = super.getCreatedDate();
-//		if(super.getCreatedBy() != null)
-//			this.last_modified_date = super.getLastModifiedDate();
-//		if(super.getCreatedBy() != null)
-//			this.created_by = super.getCreatedBy().getName();
-//		if(super.getLastModifiedBy() != null)
-//			this.last_updated_by = super.getLastModifiedBy().getName();
-//	}
 
 	public Long getRequest_id() {
 		return request_id;

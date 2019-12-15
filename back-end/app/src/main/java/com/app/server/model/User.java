@@ -1,6 +1,7 @@
 package com.app.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +42,10 @@ public class User {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private AuthProvider provider;
+
+	@Column
+	@NonNull
+	private boolean isAdmin = false;
 
 	private String providerId;
 
@@ -106,5 +111,13 @@ public class User {
 
 	public void setProviderId(String providerId) {
 		this.providerId = providerId;
+	}
+
+	public Boolean getAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(Boolean admin) {
+		isAdmin = admin;
 	}
 }
