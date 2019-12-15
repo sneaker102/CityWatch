@@ -9,7 +9,7 @@ import { Ride } from '../models/ride';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-osyu';
+  randomString = '-fl7d';
   lastPathSeq = '.localhost.run';
   basePath = '';
 
