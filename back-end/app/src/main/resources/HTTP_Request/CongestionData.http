@@ -1,4 +1,4 @@
-GET  http://localhost:8080/congestion_data/get?streetName=Strada Castanilor
+GET  http://localhost:8080/congestion_data/get?streetName=Strada%201%20Mai
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc2MzQzMTcxLCJleHAiOjE1NzcyMDcxNzF9.NY-NKd9akJeaaKvkjJOB9cyrD0rgOJ3lxc-WGiiDYAai4pepR3rKKhsNFG4Uh4cSklhiBQsuobQyDIc6lOENgQ

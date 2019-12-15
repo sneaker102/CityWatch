@@ -18,6 +18,11 @@ public class DataCongestionController {
 
 	@GetMapping("/get")
 	public List<CongestionData> getCongestionData(@RequestParam String streetName) {
-		return dataService.getCongestionData(streetName);
+		try {
+			return dataService.getCongestionData(streetName);
+		}
+		catch (InterruptedException e) {
+			return null;
+		}
 	}
 }

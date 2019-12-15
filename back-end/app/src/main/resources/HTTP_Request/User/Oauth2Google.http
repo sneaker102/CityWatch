@@ -1,3 +1,4 @@
-http://blendicavlad-4pug.localhost.run/oauth2/authorize/google?redirect_uri=''
-
+POST http://blendicavlad-osyu.localhost.run/oauth2/authorize/google?redirect_uri=http://blendicavlad-osyu.localhost.run:3000/oauth2/redirect
+Accept: application/json
+Content-Type: application/json
 ###

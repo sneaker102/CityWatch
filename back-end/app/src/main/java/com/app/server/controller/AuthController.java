@@ -48,7 +48,7 @@ public class AuthController {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(
 						loginRequest.getEmail(),
-						new String(Base64.getDecoder().decode(loginRequest.getPassword().getBytes()))
+						new String((loginRequest.getPassword().getBytes()))
 				)
 		);
 
