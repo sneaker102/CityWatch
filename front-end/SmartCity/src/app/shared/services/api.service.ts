@@ -42,9 +42,11 @@ export class ApiService {
       {}
     );
   }
+  
   insertRide(ride: Ride): Observable<any> {
     return this.htttp.post(this.basePath + '/ride_share/add', ride);
   }
+
   getRides(): Observable<any> {
     return this.htttp.get(this.basePath + '/ride_share/list');
   }

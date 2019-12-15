@@ -83,10 +83,11 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
             this.routingControl = L.Routing.control({
               waypoints: this.markers.map(m => m.getLatLng()),
               routeWhileDragging: true
-              // createMarker: (i, wp, nWps) => {
-              //   return L.marker(wp.latLng)
-              //   .bindPopup('I\'m waypoint ' + i);
-              // }
+              
+            }, err => {
+              for (const mark of this.markers) {
+                this.map.removeLayer(mark);
+              }
             });
             this.routingControl.addTo(this.map);
           });
@@ -108,7 +109,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
           }).bindPopup(`${ride.title}`);
           marker.on('click', this.markerClicked.bind(this));
 
-          marker.addTo(this.map).openPopup();
+          marker.addTo(this.map)
           mrks.push(marker.getLatLng());
         }
         this.routingControl = L.Routing.control({
