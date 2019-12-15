@@ -9,7 +9,7 @@ import { Ride } from '../models/ride';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-up7o';
+  randomString = '-osyu';
   lastPathSeq = '.localhost.run';
   basePath = '';
 
@@ -74,11 +74,11 @@ export class ApiService {
 
   public getAddress(lat, lng): Observable<any> {
     return this.htttp.get(
-      `https://nominatim.openstreetmap.org/reverse?format=xml&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
       { responseType: 'text' }
     );
   }
   getTraffic(street: string): Observable<any> {
-    return this.htttp.post(this.basePath + '', street);
+    return this.htttp.get(this.basePath + '/congestion_data/get?streetName=' + street);
   }
 }

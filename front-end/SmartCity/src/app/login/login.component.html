@@ -104,21 +104,17 @@
           matInput
           type="password"
           placeholder="Password"
-          formControlName="registerPass"
+          formControlName="password"
           required
         />
         <!-- <button mat-icon-button><mat-icon>visibility</mat-icon></button> -->
-        <mat-error *ngIf=" !userFormGroup.get('registerPass').hasError('pattern') &&
-        userFormGroup.get('registerPass').hasError('required')">
+        <mat-error *ngIf=" !userFormGroup.get('password').hasError('pattern') &&
+        userFormGroup.get('password').hasError('required')">
           Mandatory field
-        </mat-error>
-         <mat-error *ngIf=" userFormGroup.get('registerPass').hasError('pattern') &&
-        !userFormGroup.get('registerPass').hasError('required')">
-        Password should contain a digit[0-9], a lowercase letter[a-z], an uppercase letter[A-Z], and one of the !@#$%&* characters.
         </mat-error>
       </mat-form-field>
     </form>
     <button mat-flat-button class="login-bttn" (click)="signUp()">Sign up</button>
   </div>
-  
+
 </div>

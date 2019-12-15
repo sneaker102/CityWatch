@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { RideActionComponent } from '../ride-action/ride-action.component';
 import * as vega from 'vega';
@@ -12,13 +12,20 @@ import { Spec } from 'vega';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
-  currentAddress: string;
+export class DashboardComponent implements OnInit, AfterViewInit {
+  isLineChartLoaded = false;
+  currentAddress;
   streets = [
     'Muresenilor',
     'Brediceanu Tiberiu',
     'Constelatiei',
-    'Constructorilor'
+    'Constructorilor',
+    'Lacramioarelor',
+    'Lupeni',
+    'Minerva',
+    'Garii',
+    'Grivitei',
+    'Saturn'
   ];
   constructor(
     public dialogRef: MatDialogRef<RideActionComponent>,
@@ -26,8 +33,20 @@ export class DashboardComponent implements OnInit {
     private api: ApiService
   ) {}
 
-  ngOnInit() {
-    this.buildChart();
+  ngOnInit() {}
+  ngAfterViewInit(): void {
+    this.api.getAddress(this.data.lat, this.data.lng).subscribe(
+      (address: any) => (this.currentAddress = JSON.parse(address)),
+      () => {},
+      () => {
+        if (this.currentAddress.address && this.currentAddress.address.road) {
+          console.log(this.currentAddress.address.road);
+          this.buildChart(this.currentAddress.address.road);
+        }
+      }
+    );
+
+    // this.buildChart();
     const date = [
       {
         count: 30,
@@ -48,37 +67,44 @@ export class DashboardComponent implements OnInit {
     ];
     this.buildPieChart(date);
   }
-  buildChart() {
-    // const i = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-    // this.api.getTraffic(this.streets[i]).subscribe(resp => {});
-    const date = [
-      {
-        date: new Date().getTime(),
-        cars: 30
-      },
-      {
-        date:
-          new Date().getTime() -
-          Math.floor(Math.random() * (10000 - 500 + 1)) +
-          500,
-        cars: 70
-      },
-      {
-        date:
-          new Date().getTime() -
-          Math.floor(Math.random() * (10000 - 500 + 1)) +
-          500,
-        cars: 170
-      },
-      {
-        date:
-          new Date().getTime() -
-          Math.floor(Math.random() * (10000 - 500 + 1)) +
-          500,
-        cars: 10
-      }
-    ];
-    this.buildLineChart(date);
+  buildChart(street: string) {
+    // const i = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+    // this.streets[i]
+    this.api.getTraffic(street).subscribe(resp => {
+      const date = resp.map(r => {
+        return { date: r.date, cars: r.carsPerSecond };
+      });
+      this.isLineChartLoaded = true;
+      this.buildLineChart(date);
+    });
+    // const date = [
+    //   {
+    //     date: new Date().getTime(),
+    //     cars: 30
+    //   },
+    //   {
+    //     date:
+    //       new Date().getTime() -
+    //       Math.floor(Math.random() * (10000 - 500 + 1)) +
+    //       500,
+    //     cars: 70
+    //   },
+    //   {
+    //     date:
+    //       new Date().getTime() -
+    //       Math.floor(Math.random() * (10000 - 500 + 1)) +
+    //       500,
+    //     cars: 170
+    //   },
+    //   {
+    //     date:
+    //       new Date().getTime() -
+    //       Math.floor(Math.random() * (10000 - 500 + 1)) +
+    //       500,
+    //     cars: 10
+    //   }
+    // ];
+    // this.buildLineChart(date);
   }
   buildLineChart(chartData: any) {
     const spec: TopLevelSpec = {
@@ -89,8 +115,7 @@ export class DashboardComponent implements OnInit {
       mark: {
         type: 'line',
         point: {
-          filled: false,
-          fill: 'white'
+          filled: true
         },
         tooltip: { content: 'encoding' }
       },
@@ -98,12 +123,12 @@ export class DashboardComponent implements OnInit {
         x: {
           field: 'date',
           type: 'temporal',
-          timeUnit: 'yearmonthdatehoursminutesseconds',
+          timeUnit: 'yearmonthdate',
           axis: { title: null }
         },
         y: { field: 'cars', type: 'quantitative', axis: { title: null } }
       },
-      width: 1000,
+      width: 800,
       height: 185
     };
 
