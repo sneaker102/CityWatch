@@ -7,3 +7,12 @@
     margin: 20px;
     z-index: 1000;
 }
+
+.popup-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    & mat-card-title {
+        font-weight: 600;
+    }
+}

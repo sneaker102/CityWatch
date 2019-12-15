@@ -1,0 +1,10 @@
+<form class="info-form">
+    <mat-form-field class="info-full-width">
+        <input #title matInput placeholder="Titlu">
+    </mat-form-field>
+    <mat-form-field class="info-full-width">
+        <textarea #description matInput placeholder="Scurta descriere"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="sentComplain(title.value, description.value)">Trimite</button>
+</form>
