@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class DataUtils {
@@ -149,31 +151,42 @@ public class DataUtils {
 		List<CongestionData> congestionData = new ArrayList<>();
 
 		try {
+			Consumer<String> lineConsumer = (l) -> {
+				String[] data = l.split(cvsSplitBy);
 
-			br = new BufferedReader(new FileReader(csvFile));
-			while ((line = br.readLine()) != null) {
+				String dataStreetName = data[9].replace("Strada","")
+						.replace("\"","")
+						.replace("Bulevardul","")
+						.replace("Alee","")
+						.replace("Cale","")
+						.replace("Drum","")
+						.replace("'","");
+				String sanitizedStreetName = streetName.replace("Strada","")
+						.replace("\"","")
+						.replace("Bulevardul","")
+						.replace("Alee","")
+						.replace("Cale","")
+						.replace("Drum","")
+						.replace("'","");
 
-				// use comma as separator
-				String[] data = line.split(cvsSplitBy);
-
-				String dataStreetName = data[9].replace("Strada","").replace("\"","").replace("'","");
-				String sanitizedStreetName = streetName.replace("Strada","").replace("\"","").replace("'","");;
-
-				if(dataStreetName.equals(sanitizedStreetName)) {
-					congestionData.add(new CongestionData(
-							data[9],
-							Integer.parseInt(data[2].replace("\"","")),
-							Integer.parseInt(data[1].replace("\"","")),
-							Integer.parseInt(data[6].replace("\"","")),
-							Timestamp.valueOf(data[5].replace("\"","").replace("T"," "))
-					));
+				try {
+					if (dataStreetName.trim().equalsIgnoreCase(sanitizedStreetName.trim())) {
+						congestionData.add(new CongestionData(
+								data[9],
+								Integer.parseInt(data[2].replace("\"", "")),
+								Integer.parseInt(data[1].replace("\"", "")),
+								Integer.parseInt(data[6].replace("\"", "")),
+								Timestamp.valueOf(data[5].replace("\"", "").replace("T", " "))
+						));
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Number could not be parsed");
 				}
-
-			}
+			};
+			br = new BufferedReader(new FileReader(csvFile));
+			br.lines().forEach(lineConsumer);
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			if (br != null) {

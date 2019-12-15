@@ -9,6 +9,7 @@ public class CongestionData {
 	private int avgMeasuredTime;
 	private int carsNo;
 	private Timestamp date;
+	private double carsPerSecond;
 
 	public CongestionData(String street, int trafficAvgSpeed, int avgMeasuredTime, int carsNo, Timestamp date) {
 		this.street = street;
@@ -16,6 +17,7 @@ public class CongestionData {
 		this.avgMeasuredTime = avgMeasuredTime;
 		this.carsNo = carsNo;
 		this.date = date;
+		this.carsPerSecond = (float)carsNo / (float)trafficAvgSpeed;
 	}
 
 	public String getStreet() {
@@ -56,5 +58,13 @@ public class CongestionData {
 
 	public void setCarsNo(int carsNo) {
 		this.carsNo = carsNo;
+	}
+
+	public double getCarsPerSecond() {
+		return carsPerSecond;
+	}
+
+	public void setCarsPerSecond(double carsPerSecond) {
+		this.carsPerSecond = carsPerSecond;
 	}
 }
