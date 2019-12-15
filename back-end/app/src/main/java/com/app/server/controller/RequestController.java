@@ -67,6 +67,8 @@ public class RequestController {
 
 		updateFromData(request,requestData);
 
+		requestRepository.save(request);
+
 		return new ApiResponse(true,"Updated");
 	}
 

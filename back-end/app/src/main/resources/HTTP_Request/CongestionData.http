@@ -1,4 +1,4 @@
-GET  http://blendicavlad-up7o.localhost.run/request/list?Id=1
+GET  http://localhost:8080/congestion_data/get?streetName=Strada Castanilor
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTc2MzQzMTcxLCJleHAiOjE1NzcyMDcxNzF9.NY-NKd9akJeaaKvkjJOB9cyrD0rgOJ3lxc-WGiiDYAai4pepR3rKKhsNFG4Uh4cSklhiBQsuobQyDIc6lOENgQ

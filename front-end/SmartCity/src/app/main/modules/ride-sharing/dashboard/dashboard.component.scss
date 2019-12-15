@@ -1,20 +1,6 @@
-// .chart-graphic {
-//   max-width: 100%;
-//   text-align: center;
-//   height: 24rem;
-//   .marks {
-//     max-width: 100%;
-//     .mark-group.role-legend {
-//       position: absolute;
-//       bottom: 0;
-//       right: 0;
-//     }
-//   }
-//   svg {
-//     background-color: transparent !important;
-//   }
-// }
-
+mat-spinner{
+  margin: 0 auto;
+}
 .chart-wrapper {
   display: flex;
   flex-direction: column;
