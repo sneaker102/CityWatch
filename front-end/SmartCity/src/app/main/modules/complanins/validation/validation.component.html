@@ -1,0 +1,23 @@
+<div class="validation-wrapper">
+    <h3> Validare sesizări </h3>
+    <div *ngFor="let marker of markers">
+        <div *ngIf="marker.status !== 'complete'">
+            <mat-card class="card">
+                <mat-card-header>
+                    <img mat-card-avatar src='../../../../../assets/markers/{{ marker.request_type }}.png' class="example-header-image">
+                    <mat-card-title> {{ marker.title }} </mat-card-title>
+                    <mat-card-subtitle> {{ marker.createdDate | date }} </mat-card-subtitle>
+                    <mat-card-subtitle> {{ marker.address }} </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>
+                        {{ marker.description }}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="warn" (click)="handleComplainDone(marker)"> Finalizat </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

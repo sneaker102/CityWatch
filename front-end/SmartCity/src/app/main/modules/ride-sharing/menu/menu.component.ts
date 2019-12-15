@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { ValidationComponent } from '../validation/validation.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class MenuComponent {
   public currentUser;
 
   constructor(private route: Router, public dialog: MatDialog, public api: ApiService) {
-
+  
   }
 
   public navigateTo(route): void {
@@ -26,12 +26,4 @@ export class MenuComponent {
   //     height: '80%'
   //   });
   // }
-
-  public openModalValidation(): void {
-    this.dialog.open(ValidationComponent, {
-      width: '80%',
-      height: '80%',
-      panelClass: 'validation-class'
-    });
-  }
 }

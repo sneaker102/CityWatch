@@ -1,86 +1,139 @@
 /* You can add global styles to this file, and also import other style files */
-
-html, body { 
-    height: 100%; 
+@import "~saturn-datepicker/theming";
+ // material theme data structure https://material.angular.io/guide/theming#defining-a-custom-theme
+html,
+body {
+  height: 100%;
 }
 
-body { 
-    margin: 0; 
-    font-family: Roboto, "Helvetica Neue", sans-serif; 
-    background-color: #ecf0f1;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #ecf0f1;
 }
 
 .leaflet-control {
-    display: none;
+  display: none;
 }
 
 .map {
-    height: 100%;
-    padding: 0;
+  height: 100%;
+  padding: 0;
 }
 
 .actions-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 1000;
-    width: 60px;
-    height: 60px;
-    background-color: #27ae60;
-    color: white;
-    border-radius: 50%;
-    margin: 10px;
-    box-shadow: 0 0 10px #95a5a6;
-    cursor: pointer;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 1000;
+  width: 60px;
+  height: 60px;
+  background-color: #27ae60;
+  color: white;
+  border-radius: 50%;
+  margin: 4px;
+  box-shadow: 0 0 10px #95a5a6;
+  cursor: pointer;
+  transition: all 0.3s;
 
-    & fa-icon {
-        font-size: 30px;
-        position: absolute;
-        top: 10px;
-        right: 14px;
-    }
+  & fa-icon {
+    font-size: 30px;
+    position: absolute;
+    top: 10px;
+    right: 14px;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 .menu-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    width: 60px;
-    height: 60px;
-    background-color: #f39c12;
-    color: white;
-    border-radius: 50%;
-    margin: 10px;
-    box-shadow: 0 0 5px #95a5a6;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 60px;
+  height: 60px;
+  background-color: #f39c12;
+  color: white;
+  border-radius: 50%;
+  margin: 10px;
+  box-shadow: 0 0 5px #95a5a6;
+  cursor: pointer;
+  transition: all 0.3s;
 
-    & fa-icon {
-        font-size: 30px;
-        position: absolute;
-        top: 12px;
-        right: 17px;
-    }
+  & fa-icon {
+    font-size: 30px;
+    position: absolute;
+    top: 12px;
+    right: 17px;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 .singout-button {
-    position: absolute;
-    top: 70px;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  margin: 19px;
+  box-shadow: 0 0 5px #95a5a6;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  & fa-icon {
+      font-size: 24px;
+      position: absolute;
+      top: 6px;
+      right: 7px;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.traffic-button {
+  position: absolute;
+    bottom: 70px;
     right: 0;
     z-index: 1000;
-    width: 40px;
-    height: 40px;
-    background-color: #e74c3c;
+    width: 50px;
+    height: 50px;
+    background-color: #f39c12;
     color: white;
     border-radius: 50%;
     margin: 19px;
     box-shadow: 0 0 5px #95a5a6;
     cursor: pointer;
+    transition: all 0.3s;
 
-    & fa-icon {
-        font-size: 24px;
-        position: absolute;
-        top: 6px;
-        right: 7px;
+    & img {
+      position: absolute;
+      width: 30px;
+      top: 10px;
+      right: 9px;
+      height: 30px;
     }
+}
+
+.validation-class mat-dialog-container{
+    background-color: #eee;
+}
+
+.scale {
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }

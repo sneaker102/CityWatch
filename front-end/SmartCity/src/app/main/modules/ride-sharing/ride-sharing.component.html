@@ -1,1 +1,17 @@
-<div #mapRide class="map"></div>
+<div data-tap-disabled="true" #mapRide class="map"></div>
+
+<div class="actions-button" (click)="pinPoint()">
+  <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
+</div>
+
+<div (click)="openMenu()" class="menu-button">
+  <fa-icon [icon]="faBars"></fa-icon>
+</div>
+
+<div (click)="handleSingOut()" class="singout-button">
+  <fa-icon [icon]="faSignOutAlt"></fa-icon>
+</div>
+
+<div class="traffic-button scale" (click)="handleTraffic()">
+  <img src="../../../../assets/traffic.png">
+</div>
