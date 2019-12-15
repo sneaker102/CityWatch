@@ -24,9 +24,19 @@ export class DashboardComponent implements OnInit {
     public dialogRef: MatDialogRef<RideActionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private api: ApiService
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.api.getAddress(this.data.lat, this.data.lng).subscribe(
+      address => this.currentAddress = new DOMParser()
+        .parseFromString(address, 'text/xml').getElementsByTagName('result')[0].childNodes[0].nodeValue,
+      () => { },
+      () => {
+        console.log(this.currentAddress);
+        this.buildChart();
+      }
+    );
+
     this.buildChart();
     const date = [
       {

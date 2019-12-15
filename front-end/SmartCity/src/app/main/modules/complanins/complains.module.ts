@@ -10,7 +10,6 @@ import { MarkerModalInfoComponent } from './marker-modal-info/marker-modal-info.
 import { MarkerPopupComponent } from './marker-popup/marker-popup.component';
 import { MenuComponent } from './menu/menu.component';
 import { ValidationComponent } from './validation/validation.component';
-import { LocationPipe } from './validation/location.pipe';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,7 @@ import { LocationPipe } from './validation/location.pipe';
     MarkerModalInfoComponent,
     MarkerPopupComponent,
     MenuComponent,
-    ValidationComponent,
-    LocationPipe
+    ValidationComponent
   ],
   imports: [
     CommonModule,
