@@ -13,12 +13,19 @@ import { Spec } from 'vega';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  isLineChartLoaded = false;
   currentAddress: string;
   streets = [
     'Muresenilor',
     'Brediceanu Tiberiu',
     'Constelatiei',
-    'Constructorilor'
+    'Constructorilor',
+    'Lacramioarelor',
+    'Lupeni',
+    'Minerva',
+    'Garii',
+    'Grivitei',
+    'Saturn'
   ];
   constructor(
     public dialogRef: MatDialogRef<RideActionComponent>,
@@ -49,36 +56,43 @@ export class DashboardComponent implements OnInit {
     this.buildPieChart(date);
   }
   buildChart() {
-    // const i = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-    // this.api.getTraffic(this.streets[i]).subscribe(resp => {});
-    const date = [
-      {
-        date: new Date().getTime(),
-        cars: 30
-      },
-      {
-        date:
-          new Date().getTime() -
-          Math.floor(Math.random() * (10000 - 500 + 1)) +
-          500,
-        cars: 70
-      },
-      {
-        date:
-          new Date().getTime() -
-          Math.floor(Math.random() * (10000 - 500 + 1)) +
-          500,
-        cars: 170
-      },
-      {
-        date:
-          new Date().getTime() -
-          Math.floor(Math.random() * (10000 - 500 + 1)) +
-          500,
-        cars: 10
-      }
-    ];
-    this.buildLineChart(date);
+    const i = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+    this.streets[i]
+    this.api.getTraffic('Strada Castanilor').subscribe(resp => {
+      const date = resp.map(r => {
+        return { date: r.date, cars: r.carsPerSecond };
+      });
+      this.isLineChartLoaded = true;
+      this.buildLineChart(date);
+    });
+    // const date = [
+    //   {
+    //     date: new Date().getTime(),
+    //     cars: 30
+    //   },
+    //   {
+    //     date:
+    //       new Date().getTime() -
+    //       Math.floor(Math.random() * (10000 - 500 + 1)) +
+    //       500,
+    //     cars: 70
+    //   },
+    //   {
+    //     date:
+    //       new Date().getTime() -
+    //       Math.floor(Math.random() * (10000 - 500 + 1)) +
+    //       500,
+    //     cars: 170
+    //   },
+    //   {
+    //     date:
+    //       new Date().getTime() -
+    //       Math.floor(Math.random() * (10000 - 500 + 1)) +
+    //       500,
+    //     cars: 10
+    //   }
+    // ];
+    // this.buildLineChart(date);
   }
   buildLineChart(chartData: any) {
     const spec: TopLevelSpec = {
@@ -89,8 +103,7 @@ export class DashboardComponent implements OnInit {
       mark: {
         type: 'line',
         point: {
-          filled: false,
-          fill: 'white'
+          filled: true,
         },
         tooltip: { content: 'encoding' }
       },
@@ -98,12 +111,12 @@ export class DashboardComponent implements OnInit {
         x: {
           field: 'date',
           type: 'temporal',
-          timeUnit: 'yearmonthdatehoursminutesseconds',
+          timeUnit: 'yearmonthdate',
           axis: { title: null }
         },
         y: { field: 'cars', type: 'quantitative', axis: { title: null } }
       },
-      width: 1000,
+      width: 800,
       height: 185
     };
 

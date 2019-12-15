@@ -22,7 +22,8 @@ import {
   MatExpansionModule,
   MatTooltipModule,
   MatCardModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
@@ -56,7 +57,8 @@ const IMPORTS_EXPORTS = [
   FormsModule,
   ReactiveFormsModule,
   MatSidenavModule,
-  FontAwesomeModule
+  FontAwesomeModule,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({

@@ -79,6 +79,6 @@ export class ApiService {
     );
   }
   getTraffic(street: string): Observable<any> {
-    return this.htttp.post(this.basePath + '', street);
+    return this.htttp.get(this.basePath + '/congestion_data/get?streetName=' + street);
   }
 }
