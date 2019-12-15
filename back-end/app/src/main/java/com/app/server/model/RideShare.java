@@ -40,6 +40,9 @@ public class RideShare {
 	@Column()
 	private Timestamp start_date;
 
+	@Column
+	private Boolean is_completed = false;
+
 	@OneToMany(
 			cascade = CascadeType.ALL,
 			orphanRemoval = false,
@@ -156,6 +159,11 @@ public class RideShare {
 		rideSharingUser.setRide_share(null);
 	}
 
+	public Boolean getIs_completed() {
+		return is_completed;
+	}
 
-
+	public void setIs_completed(Boolean is_completed) {
+		this.is_completed = is_completed;
+	}
 }
