@@ -36,5 +36,21 @@ public class Auditable<U>
 	@LastModifiedDate
 	@Column(name = "last_modified_date")
 	private Timestamp lastModifiedDate;
+
+	public U getCreatedBy() {
+		return createdBy;
+	}
+
+	public Timestamp getCreatedDate() {
+		return createdDate;
+	}
+
+	public U getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public Timestamp getLastModifiedDate() {
+		return lastModifiedDate;
+	}
 }
 

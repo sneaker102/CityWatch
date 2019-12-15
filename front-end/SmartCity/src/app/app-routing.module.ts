@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './main/modules/complanins/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -15,16 +16,16 @@ const routes: Routes = [
   },
   {
     path: 'complains',
-   // canActivate: [AuthGuardService],
+   canActivate: [AuthGuardService],
     loadChildren: () => import('./main/modules/complanins/complains.module').then(m => m.ComplainsModule)
   },
   {
     path: 'rideSharing',
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     loadChildren: () => import('./main/modules/ride-sharing/ride-sharing.module').then(m => m.RideSharingModule)
   },
   {
-    path: '**', canActivate: [AuthGuardService], redirectTo: ''
+    path: '**', redirectTo: ''
   },
 ];
 

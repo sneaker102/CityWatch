@@ -1,4 +1,5 @@
 <div class="map"
+    *ngIf="options"
      leaflet
      [leafletOptions]="options"
      (leafletClick)="clickOnMap($event)"
@@ -11,6 +12,10 @@
     <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
 </div>
 
-<div class="menu-button">
+<div (click)="openMenu()" class="menu-button">
     <fa-icon [icon]="faBars"></fa-icon>
+</div>
+
+<div (click)="handleSingOut()" class="singout-button">
+    <fa-icon [icon]="faSignOutAlt"></fa-icon>
 </div>
