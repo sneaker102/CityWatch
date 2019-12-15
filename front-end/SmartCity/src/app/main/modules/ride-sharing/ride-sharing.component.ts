@@ -78,6 +78,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
           data: e.latlng
         });
         diagRef.afterClosed().subscribe(x => {
+          this.forGraph = false;
           this.map.removeLayer(mark);
         });
       }

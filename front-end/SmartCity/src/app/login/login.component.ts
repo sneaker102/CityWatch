@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit {
       name: ['', NameValidation],
       userName: ['', UserNameValidation],
       email: ['', EmailValidation],
-      password: ['', Validators.required],
-      registerPass: ['', PasswordValidation]
+      password: ['', Validators.required]
     });
   }
 
@@ -57,7 +56,7 @@ export class LoginComponent implements OnInit {
         name: this.userFormGroup.get('name').value,
         email: this.userFormGroup.get('email').value,
         userName: this.userFormGroup.get('userName').value,
-        password: btoa(this.userFormGroup.get('registerPass').value)
+        password: btoa(this.userFormGroup.get('password').value)
       };
       this.api.signUp(user).subscribe(resp => {
         if (resp.success) {
@@ -83,7 +82,7 @@ export class LoginComponent implements OnInit {
       this.userFormGroup.get('userName').errors ||
       this.userFormGroup.get('name').errors ||
       this.userFormGroup.get('email').errors ||
-      this.userFormGroup.get('registerPass').errors
+      this.userFormGroup.get('password').errors
     ) {
       return true;
     }
