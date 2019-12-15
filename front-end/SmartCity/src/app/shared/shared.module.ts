@@ -57,7 +57,7 @@ const IMPORTS_EXPORTS = [
   ReactiveFormsModule,
   MatSidenavModule,
   FontAwesomeModule
-]
+];
 
 @NgModule({
   declarations: [],

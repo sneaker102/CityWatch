@@ -1,0 +1,71 @@
+<form [formGroup]="formGroup">
+  <div class="wrapper">
+    <mat-form-field>
+      <input matInput placeholder="Ruta:" formControlName="title" required />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Marca masinii:"
+        formControlName="carBrand"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Cod inmatriculare:"
+        formControlName="carId"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Locuri libere:"
+        formControlName="passagersNr"
+        type="number"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Data cursei:"
+        formControlName="date"
+        [readonly]="true"
+        [satDatepicker]="picker"
+        required
+      />
+      <sat-datepicker
+        #picker
+        [rangeMode]="false"
+        [selectFirstDateOnClose]="true"
+        orderPeriodLabel="month"
+      >
+      </sat-datepicker>
+      <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Ora plecare (24h):"
+        type="time"
+        formControlName="hour"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Numarul opririlor:"
+        type="number"
+        formControlName="stopNr"
+        required
+      />
+    </mat-form-field>
+    <button mat-flat-button (click)="submit()">
+      <fa-icon [icon]="addIcon"></fa-icon>
+    </button>
+  </div>
+</form>

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { Ride } from '../models/ride';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-ppnm';
+  randomString = '-r4ve';
   lastPathSeq = '.localhost.run';
   basePath = '';
   constructor(private htttp: HttpClient) {
@@ -33,5 +34,11 @@ export class ApiService {
       this.basePath + `/oauth2/authorize/google?redirect_uri=${'/complains'}`,
       {}
     );
+  }
+  insertRide(ride: Ride): Observable<any> {
+    return this.htttp.post(this.basePath + '/ride_share/add', ride);
+  }
+  getRides(): Observable<any> {
+    return this.htttp.get(this.basePath + '/ride_share/list');
   }
 }
