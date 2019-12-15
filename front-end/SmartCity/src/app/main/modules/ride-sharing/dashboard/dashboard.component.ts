@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { RideActionComponent } from '../ride-action/ride-action.component';
 import * as vega from 'vega';
@@ -12,7 +12,7 @@ import { Spec } from 'vega';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   isLineChartLoaded = false;
   currentAddress;
   streets = [
@@ -31,19 +31,22 @@ export class DashboardComponent implements OnInit {
     public dialogRef: MatDialogRef<RideActionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private api: ApiService
-  ) { }
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  ngAfterViewInit(): void {
     this.api.getAddress(this.data.lat, this.data.lng).subscribe(
-      (address: any) => this.currentAddress = JSON.parse(address),
-      () => { },
+      (address: any) => (this.currentAddress = JSON.parse(address)),
+      () => {},
       () => {
-        console.log(this.currentAddress.address.road);
-        this.buildChart();
+        if (this.currentAddress.address && this.currentAddress.address.road) {
+          console.log(this.currentAddress.address.road);
+          this.buildChart(this.currentAddress.address.road);
+        }
       }
     );
 
-    this.buildChart();
+    // this.buildChart();
     const date = [
       {
         count: 30,
@@ -64,10 +67,10 @@ export class DashboardComponent implements OnInit {
     ];
     this.buildPieChart(date);
   }
-  buildChart() {
-    const i = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
-    this.streets[i]
-    this.api.getTraffic('Strada Castanilor').subscribe(resp => {
+  buildChart(street: string) {
+    // const i = Math.floor(Math.random() * (9 - 0 + 1)) + 0;
+    // this.streets[i]
+    this.api.getTraffic(street).subscribe(resp => {
       const date = resp.map(r => {
         return { date: r.date, cars: r.carsPerSecond };
       });
@@ -112,7 +115,7 @@ export class DashboardComponent implements OnInit {
       mark: {
         type: 'line',
         point: {
-          filled: true,
+          filled: true
         },
         tooltip: { content: 'encoding' }
       },
