@@ -48,7 +48,9 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
         zoom: 14,
         center: latLng([coords.coords.latitude, coords.coords.longitude])
       };
-    })
+    });
+
+    this.http.getCurrentUser();
   }
 
   ngAfterViewInit() {
@@ -81,29 +83,31 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
     this.http.getAllMarkers().subscribe(
       (markers => {
         Array.from(markers).forEach((dbMarker: any) => {
-          console.log(dbMarker);
-          currentLayers.push(
-            marker([dbMarker.latitude, dbMarker.longitude], {
-              icon: icon({
-                iconUrl: `../../../../assets/markers/${dbMarker.request_type}.png`,
-                iconSize: [42, 42]
+          if (dbMarker.status !== 'complete') {
+            currentLayers.push(
+              marker([dbMarker.latitude, dbMarker.longitude], {
+                icon: icon({
+                  iconUrl: `../../../../assets/markers/${dbMarker.request_type}.png`,
+                  iconSize: [42, 42]
+                })
               })
-            })
-              .bindPopup(`
-                <div style="display: flex; flex-direction: column; width: 250px">
-                  <div style="display:flex; justify-content: space-between">
-                    <mat-card-title style="font-weight: 600; margin-bottom: 10px"> ${ dbMarker.title} </mat-card-title>
-                    <span style="color: #d35400; font-weight: 600; margin-right: 8px"> ${ dbMarker.status === 'pending' ?  'In asteptare' : ''} </span>
+                .bindPopup(`
+                  <div style="display: flex; flex-direction: column; width: 250px">
+                    <div style="display:flex; justify-content: space-between">
+                      <mat-card-title style="font-weight: 600; margin-bottom: 10px"> ${ dbMarker.title} </mat-card-title>
+                      <span style="color: #d35400; font-weight: 600; margin-right: 8px"> ${ dbMarker.status === 'pending' ? 'In asteptare' : ''} </span>
+                    </div>
+                    <mat-card-subtitle style="margin-bottom: 6px"> ${ dbMarker.description} </mat-card-subtitle>
+                    <div style="display:flex; justify-content: space-between">
+                      <mat-card-subtitle style="color: gray"> ${ new Date(dbMarker.createdDate).toLocaleDateString('en-US')} </mat-card-subtitle>
+                      <mat-card-subtitle style="color: gray; margin-right: 8px"> ${ dbMarker.createdBy.name} </mat-card-subtitle>
+                    </div>
                   </div>
-                  <mat-card-subtitle style="margin-bottom: 6px"> ${ dbMarker.description} </mat-card-subtitle>
-                  <div style="display:flex; justify-content: space-between">
-                    <mat-card-subtitle style="color: gray"> ${ new Date(dbMarker.createdDate).toLocaleDateString('en-US')} </mat-card-subtitle>
-                    <mat-card-subtitle style="color: gray; margin-right: 8px"> ${ dbMarker.createdBy.name } </mat-card-subtitle>
-                  </div>
-                </div>
-              `)
-          );
+                `)
+            );
+          }
         });
+
         this.layers.push(...currentLayers);
       })
     );
@@ -132,7 +136,6 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   public openActions(): void {
     this.canAttachMarker = true;
 
@@ -147,12 +150,18 @@ export class ComplainsComponent implements OnInit, AfterViewInit {
         this._snackBar.open('Puteti pune o sesizare !', null, {
           duration: 2000
         });
+      } else {
+        this.canAttachMarker = false;
       }
     });
   }
 
   public openMenu(): void {
-    this._bottomSheet.open(MenuComponent);
+    const dialogRef = this._bottomSheet.open(MenuComponent);
+
+    dialogRef.afterDismissed().subscribe((state) => {
+      this.getAllMarkers();
+    })
   }
 
   public handleSingOut() {
