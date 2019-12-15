@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
+import { Ride } from '../models/ride';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,13 @@ export class ApiService {
       {}
     );
   }
-
+  insertRide(ride: Ride): Observable<any> {
+    return this.htttp.post(this.basePath + '/ride_share/add', ride);
+  }
+  getRides(): Observable<any> {
+    return this.htttp.get(this.basePath + '/ride_share/list');
+  }
+  
   public getAllMarkers(): Observable<any> {
     return this.htttp.get(this.basePath + '/request/list');
   }
