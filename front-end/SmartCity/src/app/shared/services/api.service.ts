@@ -9,7 +9,7 @@ import { Ride } from '../models/ride';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-644a';
+  randomString = '-osyu';
   lastPathSeq = '.localhost.run';
   basePath = '';
 
@@ -38,7 +38,7 @@ export class ApiService {
 
   public loginGoogle(): Observable<any> {
     return this.htttp.post(
-      this.basePath + `/oauth2/authorize/google?redirect_uri=${'/complains'}`,
+      this.basePath + `/oauth2/authorize/google?redirect_uri=${'http://localhost:4200/'}`,
       {}
     );
   }

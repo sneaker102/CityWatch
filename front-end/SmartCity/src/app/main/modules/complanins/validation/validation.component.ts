@@ -17,9 +17,9 @@ export class ValidationComponent implements OnInit {
       this.markers.map((item: any) => {
         let currentAddress;
         this.api.getAddress(item.latitude, item.longitude).subscribe(
-          address => currentAddress = new DOMParser().parseFromString(address, 'text/xml').getElementsByTagName('result')[0].childNodes[0].nodeValue,
+          address => currentAddress = JSON.parse(address),
           () => {},
-          () => item.address = currentAddress
+          () => item.address = currentAddress.address.road
         );
       });
     });
