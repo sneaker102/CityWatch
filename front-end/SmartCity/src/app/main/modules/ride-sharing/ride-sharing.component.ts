@@ -8,7 +8,11 @@ import {
 } from '@angular/core';
 const L = require('leaflet');
 require('leaflet-routing-machine');
-import { faMapMarkedAlt, faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMapMarkedAlt,
+  faBars,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
 import { MatSnackBar, MatDialog, MatBottomSheet } from '@angular/material';
 import { RideActionComponent } from './ride-action/ride-action.component';
 import { RideSetup, Ride, Point } from 'src/app/shared/models/ride';
@@ -16,7 +20,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Router } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
-import { DashboardComponent } from '../complanins/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @Component({
   selector: 'app-ride-sharing',
@@ -31,6 +35,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
   faBars = faBars;
   faSignOutAlt = faSignOutAlt;
 
+  forGraph = false;
   map: L.Map;
   markers: L.Marker[] = [];
   newRide: Ride;
@@ -63,6 +68,19 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.map = new L.Map(this.mapElement.nativeElement, this.options);
     this.map.on('click', (e: any) => {
+      if (this.forGraph) {
+        const mark = L.marker(e.latlng);
+        this.markers.push(mark);
+        mark.addTo(this.map);
+        const diagRef = this.dialog.open(DashboardComponent, {
+          width: '80%',
+          height: '80%',
+          data: e.latlng
+        });
+        diagRef.afterClosed().subscribe(x => {
+          this.map.removeLayer(mark);
+        });
+      }
       if (this.markers.length < this.routePoints) {
         const mark = L.marker(e.latlng);
         this.markers.push(mark);
@@ -81,15 +99,17 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.newRide.points = points;
 
           this.api.insertRide(this.newRide).subscribe(resp => {
-            this.routingControl = L.Routing.control({
-              waypoints: this.markers.map(m => m.getLatLng()),
-              routeWhileDragging: true
-              
-            }, err => {
-              for (const mark of this.markers) {
-                this.map.removeLayer(mark);
+            this.routingControl = L.Routing.control(
+              {
+                waypoints: this.markers.map(m => m.getLatLng()),
+                routeWhileDragging: true
+              },
+              err => {
+                for (const mark of this.markers) {
+                  this.map.removeLayer(mark);
+                }
               }
-            });
+            );
             this.routingControl.addTo(this.map);
           });
         }
@@ -110,7 +130,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
           }).bindPopup(`${ride.title}`);
           marker.on('click', this.markerClicked.bind(this));
 
-          marker.addTo(this.map)
+          marker.addTo(this.map);
           mrks.push(marker.getLatLng());
         }
         this.routingControl = L.Routing.control({
@@ -128,7 +148,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
   // marker listener not working
   markerClicked(e) {
     debugger;
-    let ex = e ;
+    const ex = e;
   }
   constructPointsFromMarks(): Point[] {
     const points: Point[] = [];
@@ -187,10 +207,9 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public handleTraffic() {
-    this.dialog.open(DashboardComponent, {
-      width: '80%',
-      height: '80%'
+    this._snackBar.open('Alege strada dorita', null, {
+      duration: 2000
     });
+    this.forGraph = true;
   }
-
 }

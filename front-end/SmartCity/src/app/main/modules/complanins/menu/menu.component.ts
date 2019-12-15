@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ValidationComponent } from '../validation/validation.component';
 import { ApiService } from 'src/app/shared/services/api.service';
 
@@ -14,7 +13,7 @@ export class MenuComponent {
   public currentUser;
 
   constructor(private route: Router, public dialog: MatDialog, public api: ApiService) {
-  
+
   }
 
   public navigateTo(route): void {

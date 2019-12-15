@@ -9,7 +9,7 @@ import { Ride } from '../models/ride';
 })
 export class ApiService {
   firstPathSeq = 'http://blendicavlad';
-  randomString = '-r4ve';
+  randomString = '-up7o';
   lastPathSeq = '.localhost.run';
   basePath = '';
 
@@ -42,7 +42,7 @@ export class ApiService {
       {}
     );
   }
-  
+
   insertRide(ride: Ride): Observable<any> {
     return this.htttp.post(this.basePath + '/ride_share/add', ride);
   }
@@ -60,18 +60,25 @@ export class ApiService {
   }
 
   public getCurrentUser() {
-    this.htttp.get(this.basePath + '/user/me').subscribe((user) => {
+    this.htttp.get(this.basePath + '/user/me').subscribe(user => {
       this.currentUser = user;
-    })
+    });
   }
 
   public updateMarker(payload, id) {
-    return this.htttp.post(this.basePath + `/request/update/?request_id=${id}`, payload);
+    return this.htttp.post(
+      this.basePath + `/request/update/?request_id=${id}`,
+      payload
+    );
   }
 
-  public getAddress(lat, lng): Observable<any>{
-    return this.htttp.get(`https://nominatim.openstreetmap.org/reverse?format=xml&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`, { responseType: 'text' })
+  public getAddress(lat, lng): Observable<any> {
+    return this.htttp.get(
+      `https://nominatim.openstreetmap.org/reverse?format=xml&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+      { responseType: 'text' }
+    );
   }
-
-  
+  getTraffic(street: string): Observable<any> {
+    return this.htttp.post(this.basePath + '', street);
+  }
 }
