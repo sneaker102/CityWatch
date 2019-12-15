@@ -21,12 +21,12 @@ export class MenuComponent {
     this.route.navigate([route]);
   }
 
-  public openModalDashboard(): void {
-    this.dialog.open(DashboardComponent, {
-      width: '80%',
-      height: '80%'
-    });
-  }
+  // public openModalDashboard(): void {
+  //   this.dialog.open(DashboardComponent, {
+  //     width: '80%',
+  //     height: '80%'
+  //   });
+  // }
 
   public openModalValidation(): void {
     this.dialog.open(ValidationComponent, {

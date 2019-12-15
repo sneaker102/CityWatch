@@ -16,6 +16,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { StoreService } from 'src/app/shared/services/store.service';
 import { Router } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
+import { DashboardComponent } from '../complanins/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-ride-sharing',
@@ -183,6 +184,13 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
   public handleSingOut() {
     this.storeSerive.remove('token');
     this.router.navigate(['login']);
+  }
+
+  public handleTraffic() {
+    this.dialog.open(DashboardComponent, {
+      width: '80%',
+      height: '80%'
+    });
   }
 
 }
