@@ -10,11 +10,11 @@ import { MarkerModalInfoComponent } from './marker-modal-info/marker-modal-info.
 import { MarkerPopupComponent } from './marker-popup/marker-popup.component';
 import { MenuComponent } from './menu/menu.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
-
+import { ValidationComponent } from './validation/validation.component';
+import { LocationPipe } from './validation/location.pipe';
 
 @NgModule({
-  declarations: [ComplainsComponent, ActionsMarkerComponent, MarkerModalInfoComponent, MarkerPopupComponent, MenuComponent, DashboardComponent ],
+  declarations: [ComplainsComponent, ActionsMarkerComponent, MarkerModalInfoComponent, MarkerPopupComponent, MenuComponent, DashboardComponent, ValidationComponent, LocationPipe ],
   imports: [
     CommonModule,
     SharedModule,
@@ -24,6 +24,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatSnackBarModule,
     SharedModule
   ],
-  entryComponents: [ ActionsMarkerComponent, MarkerModalInfoComponent, MarkerPopupComponent, MenuComponent, DashboardComponent ]
+  entryComponents: [ ActionsMarkerComponent, MarkerModalInfoComponent, MarkerPopupComponent, MenuComponent, DashboardComponent, ValidationComponent ]
 })
 export class ComplainsModule { }

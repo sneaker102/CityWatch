@@ -12,6 +12,9 @@ export class ApiService {
   randomString = '-r4ve';
   lastPathSeq = '.localhost.run';
   basePath = '';
+
+  public currentUser;
+
   constructor(private htttp: HttpClient) {
     this.constructBasePath();
   }
@@ -39,9 +42,11 @@ export class ApiService {
       {}
     );
   }
+  
   insertRide(ride: Ride): Observable<any> {
     return this.htttp.post(this.basePath + '/ride_share/add', ride);
   }
+
   getRides(): Observable<any> {
     return this.htttp.get(this.basePath + '/ride_share/list');
   }
@@ -53,4 +58,20 @@ export class ApiService {
   public setMarker(payload): Observable<any> {
     return this.htttp.post(this.basePath + '/request/add', payload);
   }
+
+  public getCurrentUser() {
+    this.htttp.get(this.basePath + '/user/me').subscribe((user) => {
+      this.currentUser = user;
+    })
+  }
+
+  public updateMarker(payload, id) {
+    return this.htttp.post(this.basePath + `/request/update/?request_id=${id}`, payload);
+  }
+
+  public getAddress(lat, lng): Observable<any>{
+    return this.htttp.get(`https://nominatim.openstreetmap.org/reverse?format=xml&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`, { responseType: 'text' })
+  }
+
+  
 }

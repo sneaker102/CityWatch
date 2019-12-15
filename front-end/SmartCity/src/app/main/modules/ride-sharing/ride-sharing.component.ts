@@ -8,11 +8,14 @@ import {
 } from '@angular/core';
 const L = require('leaflet');
 require('leaflet-routing-machine');
-import { faMapMarkedAlt, faBars } from '@fortawesome/free-solid-svg-icons';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { faMapMarkedAlt, faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { MatSnackBar, MatDialog, MatBottomSheet } from '@angular/material';
 import { RideActionComponent } from './ride-action/ride-action.component';
 import { RideSetup, Ride, Point } from 'src/app/shared/models/ride';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { StoreService } from 'src/app/shared/services/store.service';
+import { Router } from '@angular/router';
+import { MenuComponent } from './menu/menu.component';
 
 @Component({
   selector: 'app-ride-sharing',
@@ -21,9 +24,12 @@ import { ApiService } from 'src/app/shared/services/api.service';
 })
 export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapRide', { static: false }) mapElement: ElementRef;
+
   routePoints = 0;
   faMapMarkedAlt = faMapMarkedAlt;
   faBars = faBars;
+  faSignOutAlt = faSignOutAlt;
+
   map: L.Map;
   markers: L.Marker[] = [];
   newRide: Ride;
@@ -38,10 +44,15 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
     center: L.latLng([45.66, 25.61])
   };
 
+  layers = [];
+
   constructor(
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private api: ApiService
+    private api: ApiService,
+    private storeSerive: StoreService,
+    private router: Router,
+    private _bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit() {}
@@ -72,10 +83,11 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
             this.routingControl = L.Routing.control({
               waypoints: this.markers.map(m => m.getLatLng()),
               routeWhileDragging: true
-              // createMarker: (i, wp, nWps) => {
-              //   return L.marker(wp.latLng)
-              //   .bindPopup('I\'m waypoint ' + i);
-              // }
+              
+            }, err => {
+              for (const mark of this.markers) {
+                this.map.removeLayer(mark);
+              }
             });
             this.routingControl.addTo(this.map);
           });
@@ -97,7 +109,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
           }).bindPopup(`${ride.title}`);
           marker.on('click', this.markerClicked.bind(this));
 
-          marker.addTo(this.map).openPopup();
+          marker.addTo(this.map)
           mrks.push(marker.getLatLng());
         }
         this.routingControl = L.Routing.control({
@@ -153,6 +165,7 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
+
   constructRideObj(rideSetup: RideSetup): Ride {
     return {
       title: rideSetup.route,
@@ -162,4 +175,14 @@ export class RideSharingComponent implements OnInit, AfterViewInit, OnDestroy {
       start_date: rideSetup.date
     };
   }
+
+  public openMenu(): void {
+    this._bottomSheet.open(MenuComponent);
+  }
+
+  public handleSingOut() {
+    this.storeSerive.remove('token');
+    this.router.navigate(['login']);
+  }
+
 }
